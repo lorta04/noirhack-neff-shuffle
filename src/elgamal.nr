@@ -199,19 +199,3 @@ pub fn test_3_layered_onion_encryption_decryption() {
     // Verifying that the final decrypted message matches the original plaintext
     assert(msg1[1] == m, "Decrypted message does not match original message");
 }
-
-// Helper function to compare field elements with small tolerance
-pub fn is_approx_equal(a: Field, b: Field) -> bool {
-    let epsilon: u64 = 1000; // Fixed tolerance threshold
-    let diff = abs((a - b) as i64);
-    diff < epsilon
-}
-
-// Absolute difference function (modular behavior)
-pub fn abs(a: i64) -> u64 {
-    if a < 0 {
-        (a * -1) as u64
-    } else {
-        a as u64
-    }
-}
