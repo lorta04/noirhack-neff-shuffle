@@ -107,7 +107,7 @@ pub fn test_1_layered_encrypt_and_shuffle_4_cards() {
 }
 
 #[test]
-pub fn test_4_layered_encrypt_and_shuffle_4_cards_with_multiple_shuffles() {
+pub fn test_4_layered_encrypt_and_shuffle_4_cards() {
     // Generator value and secret keys
     let g: Field = 3; // Example generator
     let sk1: Field = 22.into(); // Player 1's secret key
