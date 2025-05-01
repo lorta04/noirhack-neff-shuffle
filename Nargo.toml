@@ -1,0 +1,6 @@
+[package]
+name = "neff_shuffle"
+type = "bin"
+authors = [""]
+
+[dependencies]
