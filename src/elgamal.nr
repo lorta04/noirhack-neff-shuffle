@@ -1,7 +1,7 @@
 use crate::algebra::pow;
 use crate::utils::gen_public_key_and_aggregate_key;
 
-/// Minimal ElGamal encryption for one card using u256 exponent.
+/// Minimal ElGamal encryption for one card using.
 ///
 /// msg   = [c1, c2]   (fresh card uses [1, m])
 /// g     = generator  (Field, e.g. 3)
@@ -19,7 +19,7 @@ pub fn encrypt(g: Field, pk: Field, msg: [Field; 2], rand: Field) -> [Field; 2] 
     [c1, c2]
 }
 
-/// Minimal ElGamal partial-decryption for one card using u256 exponent.
+/// Minimal ElGamal partial-decryption for one card.
 ///
 /// g           = generator  (Field, e.g. 3)
 /// ciphertext  = [c1, c2]   ciphertext input
@@ -42,6 +42,16 @@ pub fn decrypt(g: Field, ciphertext: [Field; 2], sk: Field) -> (Field, [Field; 2
     assert(m2 * card_exp == ciphertext[1]);
 
     (pk, [m1, m2])
+}
+
+/// Computes a decryption component for ElGamal.
+///
+/// c1  = g^r (first part of the ciphertext)
+/// sk  = one share of the secret key (Field)
+///
+/// ret = c1^sk, which contributes to recovering m = c2 / c1^sk
+fn calculate_decrypt_component(c1: Field, sk: Field) -> Field {
+    pow(c1, sk)
 }
 
 #[test]
@@ -198,4 +208,35 @@ pub fn test_3_layered_onion_encryption_decryption() {
 
     // Verifying that the final decrypted message matches the original plaintext
     assert(msg1[1] == m, "Decrypted message does not match original message");
+}
+
+#[test]
+fn test_calculate_decrypt_component_matches_direct_decrypt_2_layered_onion_encryption_decryption() {
+    let g: Field = 3;
+    let sk1: Field = 11.into();
+    let sk2: Field = 22.into();
+
+    // Start with aggregate key = 1, then sequentially add each pk
+    let old_aggk: Field = 1.into();
+    let (_pk1, agg_pk1) = gen_public_key_and_aggregate_key(g, sk1, old_aggk);
+    let (_pk2, agg_pk) = gen_public_key_and_aggregate_key(g, sk2, agg_pk1); // Final aggregate pk = g^{sk1 + sk2}
+
+    let m: Field = 64.into();
+    let plain: [Field; 2] = [1.into(), m];
+    let rand: Field = 77.into();
+
+    let ciphertext = encrypt(g, agg_pk, plain, rand);
+    let c1 = ciphertext[0];
+    let c2 = ciphertext[1];
+
+    // Each player computes their decrypt component
+    let share1 = calculate_decrypt_component(c1, sk1); // c1^sk1
+    let share2 = calculate_decrypt_component(c1, sk2); // c1^sk2
+
+    // Combine shares: m = c2 / (share1 * share2)
+    let decrypted_msg = c2 / share1 / share2;
+    println(f"Decryption Result: got {decrypted_msg}, expected {m}");
+
+    // Check correctness
+    assert(decrypted_msg == m, f"Decryption failed: got {decrypted_msg}, expected {m}");
 }
