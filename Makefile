@@ -1,25 +1,75 @@
-PROJECT_NAME = neff_shuffle
-TARGET_DIR = ./target
-CIRCUIT_JSON = $(TARGET_DIR)/$(PROJECT_NAME).json
-WITNESS = $(TARGET_DIR)/$(PROJECT_NAME).gz
-PROOF = $(TARGET_DIR)/proof
-VK = $(TARGET_DIR)/vk
+# -----------------------------
+# Configuration
+# -----------------------------
 
-.PHONY: all clean prove verify
+# List of all crate names (edit if you add more)
+CRATES = shuffle4
 
-all: execute prove write_vk verify
+.PHONY: all clean format test tree \
+        all-% clean-% compile-% execute-% prove-% write_vk-% verify-% test-%
 
-execute:
-	nargo execute
+# -----------------------------
+# High-level commands
+# -----------------------------
 
-prove:
-	bb prove -b $(CIRCUIT_JSON) -w $(WITNESS) -o $(TARGET_DIR)
+# Build all crates
+all:
+	@for crate in $(CRATES); do \
+		$(MAKE) all-$$crate || exit 1; \
+	done
 
-write_vk:
-	bb write_vk -b $(CIRCUIT_JSON) -o $(TARGET_DIR)
+# Format all circuits
+fmt:
+	nargo fmt
 
-verify:
-	bb verify -k $(VK) -p $(PROOF)
+format:
+	nargo fmt
 
+# Run tests in all packages
+test:
+	nargo test
+
+# Clean everything
 clean:
-	rm -rf $(TARGET_DIR)
+	rm -rf ./target/*
+
+# Show directory structure
+tree:
+	tree -I '.git'
+
+# -----------------------------
+# Pattern rules per crate
+# Usage: make all-a, make prove-b, etc.
+# -----------------------------
+
+all-%:
+	$(MAKE) compile-$*
+	$(MAKE) execute-$*
+	$(MAKE) prove-$*
+	$(MAKE) write_vk-$*
+	$(MAKE) verify-$*
+
+compile-%:
+	nargo compile --package $*
+	mkdir -p ./target/$*
+	mv ./target/$*.json ./target/$*/$*.json
+
+execute-%:
+	cd crates/$* && nargo compile && nargo execute
+	mv ./target/$*.gz ./target/$*/$*.gz
+	rm -f ./target/$*.json
+
+prove-%:
+	bb prove -b ./target/$*/$*.json -w ./target/$*/$*.gz -o ./target/$*
+
+write_vk-%:
+	bb write_vk -b ./target/$*/$*.json -o ./target/$*
+
+verify-%:
+	bb verify -k ./target/$*/vk -p ./target/$*/proof
+
+test-%:
+	nargo test --package $*
+
+clean-%:
+	rm -rf ./target/$*

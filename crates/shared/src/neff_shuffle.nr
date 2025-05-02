@@ -10,6 +10,9 @@ pub fn encrypt_and_shuffle_4_cards(
     randomness: [Field; 4],
     permutation_matrix: [[Field; 4]; 4],
 ) -> [[Field; 2]; 4] {
+    assert(g != 0, "generator g must be non‑zero");
+    assert(agg_pk != 0, "aggregate public key must be non‑zero");
+
     let mut extended_permutation_matrix: [[Field; 10]; 10] = [[0; 10]; 10];
     for i in 0..4 {
         for j in 0..4 {

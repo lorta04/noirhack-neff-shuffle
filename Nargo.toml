@@ -1,6 +1,5 @@
-[package]
-name = "neff_shuffle"
-type = "bin"
-authors = [""]
-
-[dependencies]
+[workspace]
+members = [
+    "crates/shared",
+    "crates/shuffle4"
+]
