@@ -309,36 +309,43 @@ pub fn test_decrypt_each_card_with_component_shares() {
 
     println(f"clear_deck: {clear_deck}");
 
-    // ----------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------
+    // Individually decrypt each final ciphertext by peeling the four layers
+    // with the appropriate secret-key share order for that card.
+    // -----------------------------------------------------------------------------
 
+    // ----- Card 1: ask shares in order sk4 -> sk3 -> sk2 -> sk1 ----------------------
     let (_, dc_1_4) = decrypt(g, final_encrypted_deck[0], sk4);
     let (_, dc_1_3) = decrypt(g, dc_1_4, sk3);
     let (_, dc_1_2) = decrypt(g, dc_1_3, sk2);
-    let (_, dc_1_1) = decrypt(g, dc_1_2, sk1); // first card so use sk1 last
+    let (_, dc_1_1) = decrypt(g, dc_1_2, sk1); // player-1's own share last
     let decrypted_card_1 = dc_1_1[1];
     println(f"decrypted card 1: {decrypted_card_1}");
     assert(clear_deck[0][1] == decrypted_card_1);
 
+    // ----- Card 2: shares sk4 -> sk3 -> sk1 -> sk2 ----------------------------------
     let (_, dc_2_4) = decrypt(g, final_encrypted_deck[1], sk4);
     let (_, dc_2_3) = decrypt(g, dc_2_4, sk3);
     let (_, dc_2_2) = decrypt(g, dc_2_3, sk1);
-    let (_, dc_2_1) = decrypt(g, dc_2_2, sk2); // second card so use sk2 last
+    let (_, dc_2_1) = decrypt(g, dc_2_2, sk2); // player-2's own share last
     let decrypted_card_2 = dc_2_1[1];
     println(f"decrypted card 2: {decrypted_card_2}");
     assert(clear_deck[1][1] == decrypted_card_2);
 
+    // ----- Card 3: shares sk4 -> sk2 -> sk1 -> sk3 ----------------------------------
     let (_, dc_3_4) = decrypt(g, final_encrypted_deck[2], sk4);
     let (_, dc_3_3) = decrypt(g, dc_3_4, sk2);
     let (_, dc_3_2) = decrypt(g, dc_3_3, sk1);
-    let (_, dc_3_1) = decrypt(g, dc_3_2, sk3); // third card so use sk3 last
+    let (_, dc_3_1) = decrypt(g, dc_3_2, sk3); // player-3's own share last
     let decrypted_card_3 = dc_3_1[1];
     println(f"decrypted card 3: {decrypted_card_3}");
     assert(clear_deck[2][1] == decrypted_card_3);
 
+    // ----- Card 4: shares sk3 -> sk2 -> sk1 -> sk4 ----------------------------------
     let (_, dc_4_4) = decrypt(g, final_encrypted_deck[3], sk3);
     let (_, dc_4_3) = decrypt(g, dc_4_4, sk2);
     let (_, dc_4_2) = decrypt(g, dc_4_3, sk1);
-    let (_, dc_4_1) = decrypt(g, dc_4_2, sk4); // fourth card so use sk4 last
+    let (_, dc_4_1) = decrypt(g, dc_4_2, sk4); // player-4's own share last
     let decrypted_card_4 = dc_4_1[1];
     println(f"decrypted card 4: {decrypted_card_4}");
     assert(clear_deck[3][1] == decrypted_card_4);
