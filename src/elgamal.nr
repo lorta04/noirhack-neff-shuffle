@@ -3,9 +3,9 @@ use crate::utils::gen_public_key_and_aggregate_key;
 
 /// Minimal ElGamal encryption for one card using.
 ///
-/// msg   = [c1, c2]   (fresh card uses [1, m])
+/// msg   = [c1, c2]   (fresh card uses [1, m]), public input
 /// g     = generator  (Field, e.g. 3)
-/// pk    = public key h = g^sk
+/// pk    = public key h = g^sk, public input
 /// rand  = y in [0,255] (u256 nonce)
 /// ret   = [c1, c2]   ciphertext
 pub fn encrypt(g: Field, pk: Field, msg: [Field; 2], rand: Field) -> [Field; 2] {
@@ -22,7 +22,7 @@ pub fn encrypt(g: Field, pk: Field, msg: [Field; 2], rand: Field) -> [Field; 2] 
 /// Minimal ElGamal partial-decryption for one card.
 ///
 /// g           = generator  (Field, e.g. 3)
-/// ciphertext  = [c1, c2]   ciphertext input
+/// ciphertext  = [c1, c2]   ciphertext input, public input
 /// sk          = secret key x (Field, u256)
 /// ret         = (pk, [c1, m]) where pk = g^x and m = c2 / c1^x
 pub fn decrypt(g: Field, ciphertext: [Field; 2], sk: Field) -> (Field, [Field; 2]) {
