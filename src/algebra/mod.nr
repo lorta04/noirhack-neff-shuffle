@@ -67,10 +67,10 @@ pub fn pow_u128(base: Field, exponent: u128) -> Field {
 }
 
 // -----------------------------------------------------------------------------
-// pow_u256 - full 254-bit exponent (Field) - "up to 2^254-1"
+// pow - full 254-bit exponent (Field) - "up to 2^254-1"
 // Noir's Field is 254 bits so we loop all 254 positions.
 // -----------------------------------------------------------------------------
-pub fn pow_u256(base: Field, exponent: Field) -> Field {
+pub fn pow(base: Field, exponent: Field) -> Field {
     let bits: [u1; 254] = exponent.to_le_bits();
     let mut result = 1;
     let mut power = base;
@@ -193,10 +193,10 @@ fn test_pow_u128() {
 }
 
 #[test]
-fn test_pow_u256() {
+fn test_pow() {
     // 10^9  where exponent is passed as Field
     let exp_field: Field = 9;
-    let r = pow_u256(10, exp_field);
+    let r = pow(10, exp_field);
 
     let mut exp: Field = 1;
     for _ in 0..9 {
@@ -207,21 +207,21 @@ fn test_pow_u256() {
     // max exponent
     let base: Field = 7;
     let e: Field = (-1 as i64) as Field;
-    let r: Field = pow_u256(base, e);
-    let r_next_left = pow_u256(base, e + 1);
+    let r: Field = pow(base, e);
+    let r_next_left = pow(base, e + 1);
     let r_next_right = r * base;
     assert(r_next_left == r_next_right);
 }
 
 #[test]
-fn test_pow_u256_max_exponent() {
+fn test_pow_max_exponent() {
     let base: Field = 7;
 
     let e: Field = (-1 as i64) as Field;
 
-    let r: Field = pow_u256(base, e);
+    let r: Field = pow(base, e);
 
-    let r_next_left = pow_u256(base, e + 1);
+    let r_next_left = pow(base, e + 1);
     let r_next_right = r * base;
 
     assert(r_next_left == r_next_right);

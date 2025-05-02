@@ -1,11 +1,11 @@
-use crate::algebra::pow_u256;
+use crate::algebra::pow;
 
 pub fn gen_public_key_and_aggregate_key(
     generator: Field,
     sk: Field,
     old_aggk: Field,
 ) -> (Field, Field) {
-    let pk = pow_u256(generator, sk);
+    let pk = pow(generator, sk);
     let new_aggk = old_aggk * pk;
     (pk, new_aggk)
 }
@@ -33,7 +33,7 @@ fn test_onion_aggregation() {
 
     // Final aggregated key after all players
     let expected_aggk: Field =
-        pow_u256(generator, sk1) * pow_u256(generator, sk2) * pow_u256(generator, sk3);
+        pow(generator, sk1) * pow(generator, sk2) * pow(generator, sk3);
     assert(aggk3 == expected_aggk, "Final aggregated key does not match expected value.");
 
     // Verify the correctness of the aggregation

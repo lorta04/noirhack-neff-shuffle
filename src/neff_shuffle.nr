@@ -1,6 +1,6 @@
 use crate::algebra::enforce_perm_n10;
 use crate::algebra::matrix::mul_4x4_by_4x2;
-use crate::elgamal::{decrypt_u256, encrypt_u256};
+use crate::elgamal::{decrypt, encrypt};
 use crate::utils::gen_public_key_and_aggregate_key;
 
 pub fn encrypt_and_shuffle_4_cards(
@@ -21,7 +21,7 @@ pub fn encrypt_and_shuffle_4_cards(
 
     let mut encrypted_deck: [[Field; 2]; 4] = [[0, 0]; 4];
     for i in 0..4 {
-        let encrypted_card = encrypt_u256(g, agg_pk, [deck[i][0], deck[i][1]], randomness[i]);
+        let encrypted_card = encrypt(g, agg_pk, [deck[i][0], deck[i][1]], randomness[i]);
         encrypted_deck[i][0] = encrypted_card[0];
         encrypted_deck[i][1] = encrypted_card[1];
     }
@@ -40,7 +40,7 @@ pub fn decrypt_4_cards(
     let mut pk: Field = 0;
 
     for i in 0..4 {
-        let (card_pk, decrypted_card) = decrypt_u256(generator, deck_to_unmask[i], sk);
+        let (card_pk, decrypted_card) = decrypt(generator, deck_to_unmask[i], sk);
         unmasked_deck[i][0] = decrypted_card[0];
         unmasked_deck[i][1] = decrypted_card[1];
 
@@ -238,3 +238,4 @@ pub fn test_4_layered_encrypt_and_shuffle_4_cards() {
     assert(unmasked_deck1[2][1] == deck[3][1]);
     assert(unmasked_deck1[3][1] == deck[0][1]);
 }
+
