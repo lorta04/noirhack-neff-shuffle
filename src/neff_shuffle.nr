@@ -238,4 +238,3 @@ pub fn test_4_layered_encrypt_and_shuffle_4_cards() {
     assert(unmasked_deck1[2][1] == deck[3][1]);
     assert(unmasked_deck1[3][1] == deck[0][1]);
 }
-

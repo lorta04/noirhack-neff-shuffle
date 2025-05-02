@@ -32,8 +32,7 @@ fn test_onion_aggregation() {
     // println(f"Player 3 public key: {pk3}, Aggregated key: {aggk3}");
 
     // Final aggregated key after all players
-    let expected_aggk: Field =
-        pow(generator, sk1) * pow(generator, sk2) * pow(generator, sk3);
+    let expected_aggk: Field = pow(generator, sk1) * pow(generator, sk2) * pow(generator, sk3);
     assert(aggk3 == expected_aggk, "Final aggregated key does not match expected value.");
 
     // Verify the correctness of the aggregation
