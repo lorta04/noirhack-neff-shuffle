@@ -44,16 +44,6 @@ pub fn decrypt(g: Field, ciphertext: [Field; 2], sk: Field) -> (Field, [Field; 2
     (pk, [m1, m2])
 }
 
-/// Computes a decryption component for ElGamal.
-///
-/// c1  = g^r (first part of the ciphertext)
-/// sk  = one share of the secret key (Field)
-///
-/// ret = c1^sk, which contributes to recovering m = c2 / c1^sk
-pub fn calculate_decrypt_component(c1: Field, sk: Field) -> Field {
-    pow(c1, sk)
-}
-
 #[test]
 fn test_encrypt_single_card() {
     let g: Field = 3;
