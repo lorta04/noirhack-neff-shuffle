@@ -5,8 +5,8 @@ use crate::utils::gen_public_key_and_aggregate_key;
 
 pub fn encrypt_and_shuffle_4_cards(
     g: Field,
-    agg_pk: Field,
-    deck: [[Field; 2]; 4],
+    agg_pk: Field, // public input
+    deck: [[Field; 2]; 4], // public input
     randomness: [Field; 4],
     permutation_matrix: [[Field; 4]; 4],
 ) -> [[Field; 2]; 4] {
@@ -33,7 +33,7 @@ pub fn encrypt_and_shuffle_4_cards(
 
 pub fn decrypt_4_cards(
     generator: Field,
-    deck_to_unmask: [[Field; 2]; 4],
+    deck_to_unmask: [[Field; 2]; 4], // public input
     sk: Field,
 ) -> ([[Field; 2]; 4], Field) {
     let mut unmasked_deck: [[Field; 2]; 4] = [[0; 2]; 4];
