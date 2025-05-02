@@ -50,7 +50,7 @@ pub fn decrypt(g: Field, ciphertext: [Field; 2], sk: Field) -> (Field, [Field; 2
 /// sk  = one share of the secret key (Field)
 ///
 /// ret = c1^sk, which contributes to recovering m = c2 / c1^sk
-fn calculate_decrypt_component(c1: Field, sk: Field) -> Field {
+pub fn calculate_decrypt_component(c1: Field, sk: Field) -> Field {
     pow(c1, sk)
 }
 
@@ -211,7 +211,7 @@ pub fn test_3_layered_onion_encryption_decryption() {
 }
 
 #[test]
-fn test_calculate_decrypt_component_matches_direct_decrypt_2_layered_onion_encryption_decryption() {
+pub fn test_calculate_decrypt_component_matches_direct_decrypt_2_layered_onion_encryption_decryption() {
     let g: Field = 3;
     let sk1: Field = 11.into();
     let sk2: Field = 22.into();
