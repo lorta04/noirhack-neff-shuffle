@@ -1,4 +1,5 @@
 use crate::algebra::pow;
+use std::hash::poseidon2::Poseidon2;
 
 pub fn gen_public_key_and_aggregate_key(
     generator: Field,
@@ -8,6 +9,11 @@ pub fn gen_public_key_and_aggregate_key(
     let pk = pow(generator, sk);
     let new_aggk = old_aggk * pk;
     (pk, new_aggk)
+}
+
+#[no_predicates]
+pub fn poseidon_hash<let N: u32>(inputs: [Field; N]) -> Field {
+    Poseidon2::hash(inputs, inputs.len())
 }
 
 #[test]
