@@ -3,7 +3,7 @@ use crate::algebra::matrix::{
     mul_10x10_by_10x2, mul_4x4_by_4x2, mul_5x5_by_5x2, mul_6x6_by_6x2, mul_7x7_by_7x2,
     mul_8x8_by_8x2, mul_9x9_by_9x2,
 };
-use crate::elgamal::{decrypt, encrypt};
+use crate::elgamal::{calculate_decrypt_component, decrypt, encrypt};
 use crate::utils::gen_public_key_and_aggregate_key;
 
 pub fn encrypt_and_shuffle_4_cards(
@@ -876,7 +876,7 @@ pub fn test_4_layered_encrypt_and_shuffle_4_cards() {
 }
 
 #[test]
-pub fn test_decrypt_each_card_with_component_shares() {
+pub fn test_decrypt_each_card_by_peeling_layers_with_decrypt_function() {
     // ---------- setup - same parameters used in the onion-encryption test ----------
     let g: Field = 3;
     let sk1: Field = 22.into();
@@ -983,6 +983,118 @@ pub fn test_decrypt_each_card_with_component_shares() {
     let (_, dc_4_2) = decrypt(g, dc_4_3, sk1);
     let (_, dc_4_1) = decrypt(g, dc_4_2, sk4); // player-4's own share last
     let decrypted_card_4 = dc_4_1[1];
+    println(f"decrypted card 4: {decrypted_card_4}");
+    assert(clear_deck[3][1] == decrypted_card_4);
+}
+
+#[test]
+pub fn test_decrypt_each_card_with_decrypt_components() {
+    // ---------- setup - same parameters used in the onion-encryption test ----------
+    let g: Field = 3;
+    let sk1: Field = 22.into();
+    let sk2: Field = 33.into();
+    let sk3: Field = 44.into();
+    let sk4: Field = 55.into();
+
+    // original deck: card values 1,2,3,4   (each card is [1, m])
+    let deck: [[Field; 2]; 4] =
+        [[1.into(), 1.into()], [1.into(), 2.into()], [1.into(), 3.into()], [1.into(), 4.into()]];
+
+    // randomness and permutation matrices exactly as in
+    // `test_4_layered_encrypt_and_shuffle_4_cards`
+    let randomness1: [Field; 4] = [
+        53487589437593485734.into(),
+        54353456564565645345.into(),
+        543534553656456456.into(),
+        5465654634543534534453345.into(),
+    ];
+    let randomness2: [Field; 4] = [
+        667567456534645.into(),
+        543534565665465545645645665645345.into(),
+        5435345656456353656456456.into(),
+        5465654654534534534543534534453345.into(),
+    ];
+    let randomness3: [Field; 4] = [
+        6456455634543534.into(),
+        625436356536.into(),
+        674567466345634534.into(),
+        76745634556345345346.into(),
+    ];
+    let randomness4: [Field; 4] = [
+        78658456753463456.into(),
+        7864575464352345.into(),
+        35425465745676467.into(),
+        675467456656456456.into(),
+    ];
+
+    let perm1: [[Field; 4]; 4] = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
+    let perm2: [[Field; 4]; 4] = [[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0]];
+    let perm3: [[Field; 4]; 4] = [[0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]];
+    let perm4: [[Field; 4]; 4] = [[0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0]];
+
+    // aggregate public-key g^(sk1+sk2+sk3+sk4)
+    let (_, agg1) = gen_public_key_and_aggregate_key(g, sk1, 1.into());
+    let (_, agg2) = gen_public_key_and_aggregate_key(g, sk2, agg1);
+    let (_, agg3) = gen_public_key_and_aggregate_key(g, sk3, agg2);
+    let (_, agg_pk) = gen_public_key_and_aggregate_key(g, sk4, agg3);
+
+    // ---------- four-layer onion encryption & shuffling (same as before) ----------
+    let enc1 = encrypt_and_shuffle_4_cards(g, agg_pk, deck, randomness1, perm1);
+    let enc2 = encrypt_and_shuffle_4_cards(g, agg_pk, enc1, randomness2, perm2);
+    let enc3 = encrypt_and_shuffle_4_cards(g, agg_pk, enc2, randomness3, perm3);
+    let enc4 = encrypt_and_shuffle_4_cards(g, agg_pk, enc3, randomness4, perm4);
+    let final_encrypted_deck = enc4; // what every player sees
+
+    // ---------- reference cleartext using the original "peel layers with full sk" ----------
+    // (so we know the ground-truth card values after all four decryptions)
+    let (d4, _) = decrypt_4_cards(g, final_encrypted_deck, sk4);
+    // println(f"d4: {d4}");
+    let (d3, _) = decrypt_4_cards(g, d4, sk3);
+    // println(f"d3: {d3}");
+    let (d2, _) = decrypt_4_cards(g, d3, sk2);
+    // println(f"d2: {d2}");
+    let (clear_deck, _) = decrypt_4_cards(g, d2, sk1); // ground truth
+
+    println(f"clear_deck: {clear_deck}");
+
+    // -----------------------------------------------------------------------------
+    // Individually decrypt each final ciphertext by peeling the four layers
+    // with the appropriate secret-key share order for that card.
+    // -----------------------------------------------------------------------------
+
+    // ----- Card 1: ask shares in order sk4 -> sk3 -> sk2 -> sk1 ----------------------
+    let decrypted_card_1 = final_encrypted_deck[0][1]
+        / calculate_decrypt_component(final_encrypted_deck[0][0], sk4)
+        / calculate_decrypt_component(final_encrypted_deck[0][0], sk3)
+        / calculate_decrypt_component(final_encrypted_deck[0][0], sk2)
+        / calculate_decrypt_component(final_encrypted_deck[0][0], sk1);
+    println(f"decrypted card 1: {decrypted_card_1}");
+    assert(clear_deck[0][1] == decrypted_card_1);
+
+    // ----- Card 2: shares sk4 -> sk3 -> sk1 -> sk2 ----------------------------------
+    let decrypted_card_2 = final_encrypted_deck[1][1]
+        / calculate_decrypt_component(final_encrypted_deck[1][0], sk4)
+        / calculate_decrypt_component(final_encrypted_deck[1][0], sk3)
+        / calculate_decrypt_component(final_encrypted_deck[1][0], sk1)
+        / calculate_decrypt_component(final_encrypted_deck[1][0], sk2);
+    println(f"decrypted card 2: {decrypted_card_2}");
+    assert(clear_deck[1][1] == decrypted_card_2);
+
+    // ----- Card 3: shares sk4 -> sk2 -> sk1 -> sk3 ----------------------------------
+    let decrypted_card_3 = final_encrypted_deck[2][1]
+        / calculate_decrypt_component(final_encrypted_deck[2][0], sk4)
+        / calculate_decrypt_component(final_encrypted_deck[2][0], sk2)
+        / calculate_decrypt_component(final_encrypted_deck[2][0], sk1)
+        / calculate_decrypt_component(final_encrypted_deck[2][0], sk3);
+    println(f"decrypted card 3: {decrypted_card_3}");
+    assert(clear_deck[2][1] == decrypted_card_3);
+
+    // ----- Card 4: shares sk3 -> sk2 -> sk1 -> sk4 ----------------------------------
+    let decrypted_card_4 = final_encrypted_deck[3][1]
+        / calculate_decrypt_component(final_encrypted_deck[3][0], sk3)
+        / calculate_decrypt_component(final_encrypted_deck[3][0], sk2)
+        / calculate_decrypt_component(final_encrypted_deck[3][0], sk1)
+        / calculate_decrypt_component(final_encrypted_deck[3][0], sk4);
     println(f"decrypted card 4: {decrypted_card_4}");
     assert(clear_deck[3][1] == decrypted_card_4);
 }
