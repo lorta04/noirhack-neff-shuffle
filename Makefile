@@ -5,7 +5,7 @@
 # List of all crate names (edit if you add more)
 CRATES = shuffle4 shuffle5 shuffle6 shuffle7 shuffle8 shuffle9 shuffle10
 
-.PHONY: all clean format test tree \
+.PHONY: all clean format fmt test tree \
         all-% clean-% compile-% execute-% prove-% write_vk-% verify-% test-%
 
 # -----------------------------
@@ -22,8 +22,7 @@ all:
 fmt:
 	nargo fmt
 
-format:
-	nargo fmt
+format: fmt
 
 # Run tests in all packages
 test:
@@ -39,7 +38,7 @@ tree:
 
 # -----------------------------
 # Pattern rules per crate
-# Usage: make all-a, make prove-b, etc.
+# Usage: make all-shuffle5, make prove-shuffle6, etc.
 # -----------------------------
 
 all-%:
