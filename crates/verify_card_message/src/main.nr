@@ -6,7 +6,7 @@ fn main(
     decrypt_components: [Field; 10],
     num_decrypt_components: Field,
     expected_messages: pub [Field; 10],
-    num_expected: pub Field,
+    num_expected_messages: pub Field,
     nullifier_secret: Field,
 ) -> pub Field {
     let mut m = card[1];
@@ -18,7 +18,7 @@ fn main(
 
     let mut is_match = 0;
     for i in 0..10 {
-        if i < num_expected as u32 {
+        if i < num_expected_messages as u32 {
             if m == expected_messages[i] {
                 is_match += 1;
             }
@@ -53,14 +53,14 @@ fn test_main() {
     expected_messages[0] = msg;
     expected_messages[1] = 43;
     expected_messages[2] = 44;
-    let num_expected: Field = 3;
+    let num_expected_messages: Field = 3;
 
     let nullifier_hash = main(
         card,
         decrypt_components,
         num_decrypt_components,
         expected_messages,
-        num_expected,
+        num_expected_messages,
         nullifier_secret,
     );
 

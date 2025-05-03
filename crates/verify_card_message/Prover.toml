@@ -8,7 +8,7 @@ decrypt_components = [
   1, 1, 1, 1, 1, 1, 1, 1
 ]
 num_decrypt_components = 2
-num_expected = 3
+num_expected_messages = 3
 expected_messages = [
   42, # msg
   43,
