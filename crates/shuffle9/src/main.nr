@@ -1,4 +1,4 @@
-use shared::neff_shuffle::encrypt_and_shuffle_9_cards;
+use shared::neff_shuffle::encrypt_and_shuffle_cards;
 
 /// g            : Field            - generator
 /// deck         : [[Field; 2]; 9]  - 9 cards, each `[c1, c2]`
@@ -12,7 +12,7 @@ fn main(
     rand: [Field; 9],
     perm: [[Field; 9]; 9],
 ) -> pub [[Field; 2]; 9] {
-    encrypt_and_shuffle_9_cards(g, pk_agg, deck, rand, perm)
+    encrypt_and_shuffle_cards(g, pk_agg, deck, rand, perm)
 }
 
 #[test]

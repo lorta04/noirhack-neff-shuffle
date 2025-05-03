@@ -14,59 +14,28 @@ pub fn pow(base: Field, exponent: Field) -> Field {
     result
 }
 
-// -----------------------------------------------------------------------------
-// permutation-matrix check for any n <= 10
-// matrix is always 10x10; only the top-left n x n window is active
-// -----------------------------------------------------------------------------
-pub fn enforce_perm_n10(mat: [[Field; 10]; 10], n: u8) {
-    // --- sanity on n ---------------------------------------------------------
-    let n32: u32 = n as u32;
-    assert(n32 >= 2, "n must be at least 2");
-    assert(n32 <= 10, "n must be <= 10");
-
-    // --- 1. Boolean cells and zero padding ----------------------------------
-    for i in 0..10 {
-        for j in 0..10 {
+pub fn enforce_permutation<let N: u32>(mat: [[Field; N]; N]) {
+    for i in 0..N {
+        for j in 0..N {
             let c = mat[i][j];
-
-            if (i < n32) & (j < n32) {
-                // inside active block -> must be 0 or 1
-                assert(c * (c - 1) == 0);
-            } else {
-                // padding -> must be 0
-                assert(c == 0);
-            }
+            assert(c * (c - 1) == 0);
         }
     }
 
-    // --- 2. row sums ---------------------------------------------------------
-    for i in 0..10 {
+    for i in 0..N {
         let mut row_sum = 0;
-        for j in 0..10 {
-            if j < n32 {
-                row_sum += mat[i][j];
-            }
+        for j in 0..N {
+            row_sum += mat[i][j];
         }
-        if i < n32 {
-            assert(row_sum == 1); // active row
-        } else {
-            assert(row_sum == 0); // padded row
-        }
+        assert(row_sum == 1);
     }
 
-    // --- 3. column sums ------------------------------------------------------
-    for j in 0..10 {
+    for j in 0..N {
         let mut col_sum = 0;
-        for i in 0..10 {
-            if i < n32 {
-                col_sum += mat[i][j];
-            }
+        for i in 0..N {
+            col_sum += mat[i][j];
         }
-        if j < n32 {
-            assert(col_sum == 1); // active col
-        } else {
-            assert(col_sum == 0); // padded col
-        }
+        assert(col_sum == 1);
     }
 }
 
@@ -107,39 +76,13 @@ fn test_pow_max_exponent() {
 
 #[test]
 fn test_enforce_perm_u10_perm_4_ok() {
-    // 4x4 permutation padded to 10x10
-    let zero: [Field; 10] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    let p: [[Field; 10]; 10] = [
-        [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-        zero,
-        zero,
-        zero,
-        zero,
-        zero,
-        zero,
-    ];
-    enforce_perm_n10(p, 4 as u8); // should pass
+    let p: [[Field; 4]; 4] = [[0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0]];
+    enforce_permutation(p);
 }
 
 #[test(should_fail)]
 fn test_enforce_perm_u10_perm_5_bad() {
-    // duplicate 1s -> should fail
-    let zero: [Field; 10] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    let bad: [[Field; 10]; 10] = [
-        [1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-        zero,
-        zero,
-        zero,
-        zero,
-        zero,
-    ];
-    // uncomment next line to see the test fail
-    enforce_perm_n10(bad, 5 as u8);
+    let bad: [[Field; 5]; 5] =
+        [[1, 1, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0], [0, 0, 0, 0, 1], [0, 1, 0, 0, 0]];
+    enforce_permutation(bad);
 }

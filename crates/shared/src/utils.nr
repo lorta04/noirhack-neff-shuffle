@@ -11,7 +11,6 @@ pub fn gen_public_key_and_aggregate_key(
     (pk, new_aggk)
 }
 
-#[no_predicates]
 pub fn poseidon_hash<let N: u32>(inputs: [Field; N]) -> Field {
     Poseidon2::hash(inputs, inputs.len())
 }
