@@ -1,0 +1,6 @@
+[package]
+name = "decrypt_one_layer"
+type = "bin"
+
+[dependencies]
+shared = { path = "../shared" }
