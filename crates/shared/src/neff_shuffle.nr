@@ -1,5 +1,8 @@
 use crate::algebra::enforce_perm_n10;
-use crate::algebra::matrix::mul_4x4_by_4x2;
+use crate::algebra::matrix::{
+    mul_10x10_by_10x2, mul_4x4_by_4x2, mul_5x5_by_5x2, mul_6x6_by_6x2, mul_7x7_by_7x2,
+    mul_8x8_by_8x2, mul_9x9_by_9x2,
+};
 use crate::elgamal::{decrypt, encrypt};
 use crate::utils::gen_public_key_and_aggregate_key;
 
@@ -34,6 +37,192 @@ pub fn encrypt_and_shuffle_4_cards(
     shuffled_deck
 }
 
+pub fn encrypt_and_shuffle_5_cards(
+    g: Field,
+    agg_pk: Field, // public input
+    deck: [[Field; 2]; 5], // public input
+    randomness: [Field; 5],
+    permutation_matrix: [[Field; 5]; 5],
+) -> [[Field; 2]; 5] {
+    assert(g != 0, "generator g must be non‑zero");
+    assert(agg_pk != 0, "aggregate public key must be non‑zero");
+
+    let mut extended_permutation_matrix: [[Field; 10]; 10] = [[0; 10]; 10];
+    for i in 0..5 {
+        for j in 0..5 {
+            extended_permutation_matrix[i][j] = permutation_matrix[i][j];
+        }
+    }
+
+    enforce_perm_n10(extended_permutation_matrix, 5);
+
+    let mut encrypted_deck: [[Field; 2]; 5] = [[0, 0]; 5];
+    for i in 0..5 {
+        let encrypted_card = encrypt(g, agg_pk, [deck[i][0], deck[i][1]], randomness[i]);
+        encrypted_deck[i][0] = encrypted_card[0];
+        encrypted_deck[i][1] = encrypted_card[1];
+    }
+
+    let shuffled_deck = mul_5x5_by_5x2(permutation_matrix, encrypted_deck);
+
+    shuffled_deck
+}
+
+pub fn encrypt_and_shuffle_6_cards(
+    g: Field,
+    agg_pk: Field, // public input
+    deck: [[Field; 2]; 6], // public input
+    randomness: [Field; 6],
+    permutation_matrix: [[Field; 6]; 6],
+) -> [[Field; 2]; 6] {
+    assert(g != 0, "generator g must be non‑zero");
+    assert(agg_pk != 0, "aggregate public key must be non‑zero");
+
+    let mut extended_permutation_matrix: [[Field; 10]; 10] = [[0; 10]; 10];
+    for i in 0..6 {
+        for j in 0..6 {
+            extended_permutation_matrix[i][j] = permutation_matrix[i][j];
+        }
+    }
+
+    enforce_perm_n10(extended_permutation_matrix, 6);
+
+    let mut encrypted_deck: [[Field; 2]; 6] = [[0, 0]; 6];
+    for i in 0..6 {
+        let encrypted_card = encrypt(g, agg_pk, [deck[i][0], deck[i][1]], randomness[i]);
+        encrypted_deck[i][0] = encrypted_card[0];
+        encrypted_deck[i][1] = encrypted_card[1];
+    }
+
+    let shuffled_deck = mul_6x6_by_6x2(permutation_matrix, encrypted_deck);
+
+    shuffled_deck
+}
+
+pub fn encrypt_and_shuffle_7_cards(
+    g: Field,
+    agg_pk: Field, // public input
+    deck: [[Field; 2]; 7], // public input
+    randomness: [Field; 7],
+    permutation_matrix: [[Field; 7]; 7],
+) -> [[Field; 2]; 7] {
+    assert(g != 0, "generator g must be non‑zero");
+    assert(agg_pk != 0, "aggregate public key must be non‑zero");
+
+    let mut extended_permutation_matrix: [[Field; 10]; 10] = [[0; 10]; 10];
+    for i in 0..7 {
+        for j in 0..7 {
+            extended_permutation_matrix[i][j] = permutation_matrix[i][j];
+        }
+    }
+
+    enforce_perm_n10(extended_permutation_matrix, 7);
+
+    let mut encrypted_deck: [[Field; 2]; 7] = [[0, 0]; 7];
+    for i in 0..7 {
+        let encrypted_card = encrypt(g, agg_pk, [deck[i][0], deck[i][1]], randomness[i]);
+        encrypted_deck[i][0] = encrypted_card[0];
+        encrypted_deck[i][1] = encrypted_card[1];
+    }
+
+    let shuffled_deck = mul_7x7_by_7x2(permutation_matrix, encrypted_deck);
+
+    shuffled_deck
+}
+
+pub fn encrypt_and_shuffle_8_cards(
+    g: Field,
+    agg_pk: Field, // public input
+    deck: [[Field; 2]; 8], // public input
+    randomness: [Field; 8],
+    permutation_matrix: [[Field; 8]; 8],
+) -> [[Field; 2]; 8] {
+    assert(g != 0, "generator g must be non‑zero");
+    assert(agg_pk != 0, "aggregate public key must be non‑zero");
+
+    let mut extended_permutation_matrix: [[Field; 10]; 10] = [[0; 10]; 10];
+    for i in 0..8 {
+        for j in 0..8 {
+            extended_permutation_matrix[i][j] = permutation_matrix[i][j];
+        }
+    }
+
+    enforce_perm_n10(extended_permutation_matrix, 8);
+
+    let mut encrypted_deck: [[Field; 2]; 8] = [[0, 0]; 8];
+    for i in 0..8 {
+        let encrypted_card = encrypt(g, agg_pk, [deck[i][0], deck[i][1]], randomness[i]);
+        encrypted_deck[i][0] = encrypted_card[0];
+        encrypted_deck[i][1] = encrypted_card[1];
+    }
+
+    let shuffled_deck = mul_8x8_by_8x2(permutation_matrix, encrypted_deck);
+
+    shuffled_deck
+}
+
+pub fn encrypt_and_shuffle_9_cards(
+    g: Field,
+    agg_pk: Field, // public input
+    deck: [[Field; 2]; 9], // public input
+    randomness: [Field; 9],
+    permutation_matrix: [[Field; 9]; 9],
+) -> [[Field; 2]; 9] {
+    assert(g != 0, "generator g must be non‑zero");
+    assert(agg_pk != 0, "aggregate public key must be non‑zero");
+
+    let mut extended_permutation_matrix: [[Field; 10]; 10] = [[0; 10]; 10];
+    for i in 0..9 {
+        for j in 0..9 {
+            extended_permutation_matrix[i][j] = permutation_matrix[i][j];
+        }
+    }
+
+    enforce_perm_n10(extended_permutation_matrix, 9);
+
+    let mut encrypted_deck: [[Field; 2]; 9] = [[0, 0]; 9];
+    for i in 0..9 {
+        let encrypted_card = encrypt(g, agg_pk, [deck[i][0], deck[i][1]], randomness[i]);
+        encrypted_deck[i][0] = encrypted_card[0];
+        encrypted_deck[i][1] = encrypted_card[1];
+    }
+
+    let shuffled_deck = mul_9x9_by_9x2(permutation_matrix, encrypted_deck);
+
+    shuffled_deck
+}
+
+pub fn encrypt_and_shuffle_10_cards(
+    g: Field,
+    agg_pk: Field, // public input
+    deck: [[Field; 2]; 10], // public input
+    randomness: [Field; 10],
+    permutation_matrix: [[Field; 10]; 10],
+) -> [[Field; 2]; 10] {
+    assert(g != 0, "generator g must be non‑zero");
+    assert(agg_pk != 0, "aggregate public key must be non‑zero");
+
+    let mut extended_permutation_matrix: [[Field; 10]; 10] = [[0; 10]; 10];
+    for i in 0..10 {
+        for j in 0..10 {
+            extended_permutation_matrix[i][j] = permutation_matrix[i][j];
+        }
+    }
+
+    enforce_perm_n10(extended_permutation_matrix, 10);
+
+    let mut encrypted_deck: [[Field; 2]; 10] = [[0, 0]; 10];
+    for i in 0..10 {
+        let encrypted_card = encrypt(g, agg_pk, [deck[i][0], deck[i][1]], randomness[i]);
+        encrypted_deck[i][0] = encrypted_card[0];
+        encrypted_deck[i][1] = encrypted_card[1];
+    }
+
+    let shuffled_deck = mul_10x10_by_10x2(permutation_matrix, encrypted_deck);
+
+    shuffled_deck
+}
+
 pub fn decrypt_4_cards(
     generator: Field,
     deck_to_unmask: [[Field; 2]; 4], // public input
@@ -56,33 +245,155 @@ pub fn decrypt_4_cards(
     (unmasked_deck, pk)
 }
 
+pub fn decrypt_5_cards(
+    generator: Field,
+    deck_to_unmask: [[Field; 2]; 5], // public input
+    sk: Field,
+) -> ([[Field; 2]; 5], Field) {
+    let mut unmasked_deck: [[Field; 2]; 5] = [[0; 2]; 5];
+    let mut pk: Field = 0;
+
+    for i in 0..5 {
+        let (card_pk, decrypted_card) = decrypt(generator, deck_to_unmask[i], sk);
+        unmasked_deck[i][0] = decrypted_card[0];
+        unmasked_deck[i][1] = decrypted_card[1];
+
+        // Set the public key from the first card
+        if i == 0 {
+            pk = card_pk;
+        }
+    }
+
+    (unmasked_deck, pk)
+}
+
+pub fn decrypt_6_cards(
+    generator: Field,
+    deck_to_unmask: [[Field; 2]; 6], // public input
+    sk: Field,
+) -> ([[Field; 2]; 6], Field) {
+    let mut unmasked_deck: [[Field; 2]; 6] = [[0; 2]; 6];
+    let mut pk: Field = 0;
+
+    for i in 0..6 {
+        let (card_pk, decrypted_card) = decrypt(generator, deck_to_unmask[i], sk);
+        unmasked_deck[i][0] = decrypted_card[0];
+        unmasked_deck[i][1] = decrypted_card[1];
+
+        // Set the public key from the first card
+        if i == 0 {
+            pk = card_pk;
+        }
+    }
+
+    (unmasked_deck, pk)
+}
+
+pub fn decrypt_7_cards(
+    generator: Field,
+    deck_to_unmask: [[Field; 2]; 7], // public input
+    sk: Field,
+) -> ([[Field; 2]; 7], Field) {
+    let mut unmasked_deck: [[Field; 2]; 7] = [[0; 2]; 7];
+    let mut pk: Field = 0;
+
+    for i in 0..7 {
+        let (card_pk, decrypted_card) = decrypt(generator, deck_to_unmask[i], sk);
+        unmasked_deck[i][0] = decrypted_card[0];
+        unmasked_deck[i][1] = decrypted_card[1];
+
+        // Set the public key from the first card
+        if i == 0 {
+            pk = card_pk;
+        }
+    }
+
+    (unmasked_deck, pk)
+}
+
+pub fn decrypt_8_cards(
+    generator: Field,
+    deck_to_unmask: [[Field; 2]; 8], // public input
+    sk: Field,
+) -> ([[Field; 2]; 8], Field) {
+    let mut unmasked_deck: [[Field; 2]; 8] = [[0; 2]; 8];
+    let mut pk: Field = 0;
+
+    for i in 0..8 {
+        let (card_pk, decrypted_card) = decrypt(generator, deck_to_unmask[i], sk);
+        unmasked_deck[i][0] = decrypted_card[0];
+        unmasked_deck[i][1] = decrypted_card[1];
+
+        // Set the public key from the first card
+        if i == 0 {
+            pk = card_pk;
+        }
+    }
+
+    (unmasked_deck, pk)
+}
+
+pub fn decrypt_9_cards(
+    generator: Field,
+    deck_to_unmask: [[Field; 2]; 9], // public input
+    sk: Field,
+) -> ([[Field; 2]; 9], Field) {
+    let mut unmasked_deck: [[Field; 2]; 9] = [[0; 2]; 9];
+    let mut pk: Field = 0;
+
+    for i in 0..9 {
+        let (card_pk, decrypted_card) = decrypt(generator, deck_to_unmask[i], sk);
+        unmasked_deck[i][0] = decrypted_card[0];
+        unmasked_deck[i][1] = decrypted_card[1];
+
+        // Set the public key from the first card
+        if i == 0 {
+            pk = card_pk;
+        }
+    }
+
+    (unmasked_deck, pk)
+}
+
+pub fn decrypt_10_cards(
+    generator: Field,
+    deck_to_unmask: [[Field; 2]; 10], // public input
+    sk: Field,
+) -> ([[Field; 2]; 10], Field) {
+    let mut unmasked_deck: [[Field; 2]; 10] = [[0; 2]; 10];
+    let mut pk: Field = 0;
+
+    for i in 0..10 {
+        let (card_pk, decrypted_card) = decrypt(generator, deck_to_unmask[i], sk);
+        unmasked_deck[i][0] = decrypted_card[0];
+        unmasked_deck[i][1] = decrypted_card[1];
+
+        // Set the public key from the first card
+        if i == 0 {
+            pk = card_pk;
+        }
+    }
+
+    (unmasked_deck, pk)
+}
+
 #[test]
 pub fn test_1_layered_encrypt_and_shuffle_4_cards() {
     // Generator value and secret keys
     let g: Field = 3; // Example generator
-    let sk: Field = 22.into(); // Secret key for decryption
+    let sk: Field = 22; // Secret key for decryption
 
     // Example deck (4 cards) with initial values [1, m]
-    let deck: [[Field; 2]; 4] = [
-        [1.into(), 10.into()],
-        [1.into(), 20.into()],
-        [1.into(), 30.into()],
-        [1.into(), 40.into()],
-    ];
+    let deck: [[Field; 2]; 4] = [[1, 10], [1, 20], [1, 30], [1, 40]];
 
     // Randomness values for encryption
-    let randomness: [Field; 4] = [77.into(), 88.into(), 99.into(), 111.into()];
+    let randomness: [Field; 4] = [77, 88, 99, 111];
 
-    // Identity permutation matrix (4x4) for simplicity
-    let permutation_matrix: [[Field; 4]; 4] = [
-        [1.into(), 0.into(), 0.into(), 0.into()],
-        [0.into(), 0.into(), 0.into(), 1.into()],
-        [0.into(), 1.into(), 0.into(), 0.into()],
-        [0.into(), 0.into(), 1.into(), 0.into()],
-    ];
+    let permutation_matrix: [[Field; 4]; 4] =
+        [[1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]];
 
     // Generate public key and aggregated key using the new function
-    let (_, agg_pk) = gen_public_key_and_aggregate_key(g, sk, 1.into()); // Aggregate public key
+    let (_, agg_pk) = gen_public_key_and_aggregate_key(g, sk, 1); // Aggregate public key
 
     // Encrypt and shuffle the deck
     let shuffled_encrypted_deck =
@@ -107,6 +418,328 @@ pub fn test_1_layered_encrypt_and_shuffle_4_cards() {
     assert(unmasked_deck[1][1] == deck[3][1]);
     assert(unmasked_deck[2][1] == deck[1][1]);
     assert(unmasked_deck[3][1] == deck[2][1]);
+}
+
+#[test]
+pub fn test_1_layered_encrypt_and_shuffle_5_cards() {
+    // Generator value and secret keys
+    let g: Field = 3; // Example generator
+    let sk: Field = 22; // Secret key for decryption
+
+    // Example deck (5 cards) with initial values [1, m]
+    let deck: [[Field; 2]; 5] = [[1, 10], [1, 20], [1, 30], [1, 40], [1, 50]];
+
+    // Randomness values for encryption
+    let randomness: [Field; 5] = [77, 88, 99, 111, 222];
+
+    let permutation_matrix: [[Field; 5]; 5] =
+        [[1, 0, 0, 0, 0], [0, 0, 0, 1, 0], [0, 1, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 0, 1]];
+
+    // Generate public key and aggregated key using the new function
+    let (_, agg_pk) = gen_public_key_and_aggregate_key(g, sk, 1); // Aggregate public key
+
+    // Encrypt and shuffle the deck
+    let shuffled_encrypted_deck =
+        encrypt_and_shuffle_5_cards(g, agg_pk, deck, randomness, permutation_matrix);
+    // println(f"Shuffled and Encrypted Deck: {shuffled_encrypted_deck}");
+
+    // Decrypt the shuffled deck using the secret key
+    let (unmasked_deck, _) = decrypt_5_cards(g, shuffled_encrypted_deck, sk);
+    // println(f"Unmasked Deck after Decryption: {unmasked_deck}");
+
+    // Debugging output to track values at each step
+    for i in 0..5 {
+        let deck_i_second = deck[i][1];
+        let unmasked_deck_i_second = unmasked_deck[i][1];
+        let i_plus_1 = i + 1;
+        println(
+            f"Original card {i_plus_1}: {deck_i_second}, Decrypted card {i_plus_1}: {unmasked_deck_i_second}",
+        );
+    }
+
+    assert(unmasked_deck[0][1] == deck[0][1]);
+    assert(unmasked_deck[1][1] == deck[3][1]);
+    assert(unmasked_deck[2][1] == deck[1][1]);
+    assert(unmasked_deck[3][1] == deck[2][1]);
+    assert(unmasked_deck[4][1] == deck[4][1]);
+}
+
+#[test]
+pub fn test_1_layered_encrypt_and_shuffle_6_cards() {
+    // Generator value and secret keys
+    let g: Field = 3; // Example generator
+    let sk: Field = 22; // Secret key for decryption
+
+    // Example deck (5 cards) with initial values [1, m]
+    let deck: [[Field; 2]; 6] = [[1, 10], [1, 20], [1, 30], [1, 40], [1, 50], [1, 60]];
+
+    // Randomness values for encryption
+    let randomness: [Field; 6] = [77, 88, 99, 111, 222, 333];
+
+    let permutation_matrix: [[Field; 6]; 6] = [
+        [0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0],
+        [1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1],
+        [0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0],
+    ];
+
+    // Generate public key and aggregated key using the new function
+    let (_, agg_pk) = gen_public_key_and_aggregate_key(g, sk, 1); // Aggregate public key
+
+    // Encrypt and shuffle the deck
+    let shuffled_encrypted_deck =
+        encrypt_and_shuffle_6_cards(g, agg_pk, deck, randomness, permutation_matrix);
+    // println(f"Shuffled and Encrypted Deck: {shuffled_encrypted_deck}");
+
+    // Decrypt the shuffled deck using the secret key
+    let (unmasked_deck, _) = decrypt_6_cards(g, shuffled_encrypted_deck, sk);
+    // println(f"Unmasked Deck after Decryption: {unmasked_deck}");
+
+    // Debugging output to track values at each step
+    for i in 0..6 {
+        let deck_i_second = deck[i][1];
+        let unmasked_deck_i_second = unmasked_deck[i][1];
+        let i_plus_1 = i + 1;
+        println(
+            f"Original card {i_plus_1}: {deck_i_second}, Decrypted card {i_plus_1}: {unmasked_deck_i_second}",
+        );
+    }
+
+    assert(unmasked_deck[0][1] == deck[1][1]);
+    assert(unmasked_deck[1][1] == deck[3][1]);
+    assert(unmasked_deck[2][1] == deck[0][1]);
+    assert(unmasked_deck[3][1] == deck[5][1]);
+    assert(unmasked_deck[4][1] == deck[2][1]);
+    assert(unmasked_deck[5][1] == deck[4][1]);
+}
+
+#[test]
+pub fn test_1_layered_encrypt_and_shuffle_7_cards() {
+    // Generator value and secret keys
+    let g: Field = 3; // Example generator
+    let sk: Field = 22; // Secret key for decryption
+
+    // Example deck (5 cards) with initial values [1, m]
+    let deck: [[Field; 2]; 7] = [[1, 10], [1, 20], [1, 30], [1, 40], [1, 50], [1, 60], [1, 70]];
+
+    // Randomness values for encryption
+    let randomness: [Field; 7] = [77, 88, 99, 111, 222, 333, 444];
+
+    let permutation_matrix: [[Field; 7]; 7] = [
+        [0, 0, 0, 0, 1, 0, 0],
+        [1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 0, 1],
+        [0, 0, 1, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0],
+    ];
+
+    // Generate public key and aggregated key using the new function
+    let (_, agg_pk) = gen_public_key_and_aggregate_key(g, sk, 1); // Aggregate public key
+
+    // Encrypt and shuffle the deck
+    let shuffled_encrypted_deck =
+        encrypt_and_shuffle_7_cards(g, agg_pk, deck, randomness, permutation_matrix);
+    // println(f"Shuffled and Encrypted Deck: {shuffled_encrypted_deck}");
+
+    // Decrypt the shuffled deck using the secret key
+    let (unmasked_deck, _) = decrypt_7_cards(g, shuffled_encrypted_deck, sk);
+    // println(f"Unmasked Deck after Decryption: {unmasked_deck}");
+
+    // Debugging output to track values at each step
+    for i in 0..7 {
+        let deck_i_second = deck[i][1];
+        let unmasked_deck_i_second = unmasked_deck[i][1];
+        let i_plus_1 = i + 1;
+        println(
+            f"Original card {i_plus_1}: {deck_i_second}, Decrypted card {i_plus_1}: {unmasked_deck_i_second}",
+        );
+    }
+
+    assert(unmasked_deck[0][1] == deck[4][1]);
+    assert(unmasked_deck[1][1] == deck[0][1]);
+    assert(unmasked_deck[2][1] == deck[5][1]);
+    assert(unmasked_deck[3][1] == deck[6][1]);
+    assert(unmasked_deck[4][1] == deck[2][1]);
+    assert(unmasked_deck[5][1] == deck[1][1]);
+    assert(unmasked_deck[6][1] == deck[3][1]);
+}
+
+#[test]
+pub fn test_1_layered_encrypt_and_shuffle_8_cards() {
+    // Generator value and secret keys
+    let g: Field = 3; // Example generator
+    let sk: Field = 22; // Secret key for decryption
+
+    // Example deck (5 cards) with initial values [1, m]
+    let deck: [[Field; 2]; 8] =
+        [[1, 10], [1, 20], [1, 30], [1, 40], [1, 50], [1, 60], [1, 70], [1, 80]];
+
+    // Randomness values for encryption
+    let randomness: [Field; 8] = [77, 88, 99, 111, 222, 333, 444, 555];
+
+    let permutation_matrix: [[Field; 8]; 8] = [
+        [0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0],
+    ];
+
+    // Generate public key and aggregated key using the new function
+    let (_, agg_pk) = gen_public_key_and_aggregate_key(g, sk, 1); // Aggregate public key
+
+    // Encrypt and shuffle the deck
+    let shuffled_encrypted_deck =
+        encrypt_and_shuffle_8_cards(g, agg_pk, deck, randomness, permutation_matrix);
+    // println(f"Shuffled and Encrypted Deck: {shuffled_encrypted_deck}");
+
+    // Decrypt the shuffled deck using the secret key
+    let (unmasked_deck, _) = decrypt_8_cards(g, shuffled_encrypted_deck, sk);
+    // println(f"Unmasked Deck after Decryption: {unmasked_deck}");
+
+    // Debugging output to track values at each step
+    for i in 0..8 {
+        let deck_i_second = deck[i][1];
+        let unmasked_deck_i_second = unmasked_deck[i][1];
+        let i_plus_1 = i + 1;
+        println(
+            f"Original card {i_plus_1}: {deck_i_second}, Decrypted card {i_plus_1}: {unmasked_deck_i_second}",
+        );
+    }
+
+    assert(unmasked_deck[0][1] == deck[2][1]);
+    assert(unmasked_deck[1][1] == deck[5][1]);
+    assert(unmasked_deck[2][1] == deck[7][1]);
+    assert(unmasked_deck[3][1] == deck[0][1]);
+    assert(unmasked_deck[4][1] == deck[3][1]);
+    assert(unmasked_deck[5][1] == deck[4][1]);
+    assert(unmasked_deck[6][1] == deck[1][1]);
+    assert(unmasked_deck[7][1] == deck[6][1]);
+}
+
+#[test]
+pub fn test_1_layered_encrypt_and_shuffle_9_cards() {
+    // Generator value and secret keys
+    let g: Field = 3; // Example generator
+    let sk: Field = 22; // Secret key for decryption
+
+    // Example deck (5 cards) with initial values [1, m]
+    let deck: [[Field; 2]; 9] =
+        [[1, 10], [1, 20], [1, 30], [1, 40], [1, 50], [1, 60], [1, 70], [1, 80], [1, 90]];
+
+    // Randomness values for encryption
+    let randomness: [Field; 9] = [77, 88, 99, 111, 222, 333, 444, 555, 666];
+
+    let permutation_matrix: [[Field; 9]; 9] = [
+        [0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 0, 0, 0, 1, 0],
+    ];
+
+    // Generate public key and aggregated key using the new function
+    let (_, agg_pk) = gen_public_key_and_aggregate_key(g, sk, 1); // Aggregate public key
+
+    // Encrypt and shuffle the deck
+    let shuffled_encrypted_deck =
+        encrypt_and_shuffle_9_cards(g, agg_pk, deck, randomness, permutation_matrix);
+    // println(f"Shuffled and Encrypted Deck: {shuffled_encrypted_deck}");
+
+    // Decrypt the shuffled deck using the secret key
+    let (unmasked_deck, _) = decrypt_9_cards(g, shuffled_encrypted_deck, sk);
+    // println(f"Unmasked Deck after Decryption: {unmasked_deck}");
+
+    // Debugging output to track values at each step
+    for i in 0..9 {
+        let deck_i_second = deck[i][1];
+        let unmasked_deck_i_second = unmasked_deck[i][1];
+        let i_plus_1 = i + 1;
+        println(
+            f"Original card {i_plus_1}: {deck_i_second}, Decrypted card {i_plus_1}: {unmasked_deck_i_second}",
+        );
+    }
+
+    assert(unmasked_deck[0][1] == deck[3][1]);
+    assert(unmasked_deck[1][1] == deck[5][1]);
+    assert(unmasked_deck[2][1] == deck[0][1]);
+    assert(unmasked_deck[3][1] == deck[1][1]);
+    assert(unmasked_deck[4][1] == deck[6][1]);
+    assert(unmasked_deck[5][1] == deck[2][1]);
+    assert(unmasked_deck[6][1] == deck[4][1]);
+    assert(unmasked_deck[7][1] == deck[8][1]);
+    assert(unmasked_deck[8][1] == deck[7][1]);
+}
+
+#[test]
+pub fn test_1_layered_encrypt_and_shuffle_10_cards() {
+    // Generator value and secret keys
+    let g: Field = 3; // Example generator
+    let sk: Field = 22; // Secret key for decryption
+
+    // Example deck (5 cards) with initial values [1, m]
+    let deck: [[Field; 2]; 10] =
+        [[1, 10], [1, 20], [1, 30], [1, 40], [1, 50], [1, 60], [1, 70], [1, 80], [1, 90], [1, 100]];
+
+    // Randomness values for encryption
+    let randomness: [Field; 10] = [77, 88, 99, 111, 222, 333, 444, 555, 666, 777];
+
+    let permutation_matrix: [[Field; 10]; 10] = [
+        [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+    ];
+
+    // Generate public key and aggregated key using the new function
+    let (_, agg_pk) = gen_public_key_and_aggregate_key(g, sk, 1); // Aggregate public key
+
+    // Encrypt and shuffle the deck
+    let shuffled_encrypted_deck =
+        encrypt_and_shuffle_10_cards(g, agg_pk, deck, randomness, permutation_matrix);
+    // println(f"Shuffled and Encrypted Deck: {shuffled_encrypted_deck}");
+
+    // Decrypt the shuffled deck using the secret key
+    let (unmasked_deck, _) = decrypt_10_cards(g, shuffled_encrypted_deck, sk);
+    // println(f"Unmasked Deck after Decryption: {unmasked_deck}");
+
+    // Debugging output to track values at each step
+    for i in 0..10 {
+        let deck_i_second = deck[i][1];
+        let unmasked_deck_i_second = unmasked_deck[i][1];
+        let i_plus_1 = i + 1;
+        println(
+            f"Original card {i_plus_1}: {deck_i_second}, Decrypted card {i_plus_1}: {unmasked_deck_i_second}",
+        );
+    }
+
+    assert(unmasked_deck[0][1] == deck[6][1]);
+    assert(unmasked_deck[1][1] == deck[9][1]);
+    assert(unmasked_deck[2][1] == deck[0][1]);
+    assert(unmasked_deck[3][1] == deck[2][1]);
+    assert(unmasked_deck[4][1] == deck[4][1]);
+    assert(unmasked_deck[5][1] == deck[1][1]);
+    assert(unmasked_deck[6][1] == deck[3][1]);
+    assert(unmasked_deck[7][1] == deck[7][1]);
+    assert(unmasked_deck[8][1] == deck[5][1]);
+    assert(unmasked_deck[9][1] == deck[8][1]);
 }
 
 #[test]
