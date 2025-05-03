@@ -1,0 +1,6 @@
+[package]
+name = "shuffle7"
+type = "bin"
+
+[dependencies]
+shared = { path = "../shared" }

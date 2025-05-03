@@ -1,5 +1,11 @@
 [workspace]
 members = [
     "crates/shared",
-    "crates/shuffle4"
+    "crates/shuffle4",
+    "crates/shuffle5",
+    "crates/shuffle6",
+    "crates/shuffle7",
+    "crates/shuffle8",
+    "crates/shuffle9",
+    "crates/shuffle10",
 ]

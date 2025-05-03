@@ -3,7 +3,7 @@
 # -----------------------------
 
 # List of all crate names (edit if you add more)
-CRATES = shuffle4
+CRATES = shuffle4 shuffle5 shuffle6 shuffle7 shuffle8 shuffle9 shuffle10
 
 .PHONY: all clean format test tree \
         all-% clean-% compile-% execute-% prove-% write_vk-% verify-% test-%
