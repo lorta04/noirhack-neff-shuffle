@@ -3,7 +3,7 @@
 # -----------------------------
 
 # List of all crate names (edit if you add more)
-CRATES = decrypt_one_layer shuffle4 shuffle5 shuffle6 shuffle7 shuffle8 shuffle9 shuffle10
+CRATES = decrypt_one_layer shuffle4 shuffle5 shuffle6 shuffle7 shuffle8 shuffle9 shuffle10 verify_card_message
 
 .PHONY: all clean format fmt test tree \
         all-% clean-% compile-% execute-% prove-% write_vk-% verify-% test-%

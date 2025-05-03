@@ -1,0 +1,6 @@
+[package]
+name = "verify_card_message"
+type = "bin"
+
+[dependencies]
+shared = { path = "../shared" }

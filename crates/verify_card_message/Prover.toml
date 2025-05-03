@@ -1,0 +1,18 @@
+card = [
+  "0x041e54cffbab943fdc54880df2d51ad3",
+  "0x047f540302050db8121e1051053e2401a445fe636cd95139e15d4a5bdec8b718"
+]
+decrypt_components = [
+  "0x20cf5baabbd9cccd98bbf96a280094970273359dfa27bae8e6c448e2f66233f6",
+  "0x06fc91a246a8b3c4bcc4ac8b4d33ee60c0f310b9ef01fe8ef6ebf9d37f905362",
+  1, 1, 1, 1, 1, 1, 1, 1
+]
+num_decrypt_components = 2
+num_expected = 3
+expected_messages = [
+  42, # msg
+  43,
+  44,
+  0, 0, 0, 0, 0, 0, 0
+]
+nullifier_secret = 123456789

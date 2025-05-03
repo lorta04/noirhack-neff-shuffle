@@ -8,5 +8,6 @@ members = [
     "crates/shuffle7",
     "crates/shuffle8",
     "crates/shuffle9",
-    "crates/shuffle10"
+    "crates/shuffle10",
+    "crates/verify_card_message"
 ]
