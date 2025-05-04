@@ -1,0 +1,6 @@
+[package]
+name = "gen_elgamal_key_pair"
+type = "bin"
+
+[dependencies]
+shared = { path = "../shared" }

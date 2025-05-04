@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "crates/decrypt_one_layer",
+    "crates/gen_elgamal_key_pair",
     "crates/shared",
     "crates/shuffle4",
     "crates/shuffle5",
