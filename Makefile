@@ -15,7 +15,7 @@ CRATES = decrypt_one_layer gen_elgamal_key_pair shuffle4 shuffle5 shuffle6 shuff
 # Build all crates
 all:
 	@for crate in $(CRATES); do \
-		$(MAKE) all-$$crate || exit 1; \
+		$(MAKE) all_$$crate || exit 1; \
 	done
 
 # Format all circuits
