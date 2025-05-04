@@ -1,3 +1,10 @@
+deck = [
+  ["0x05", "0x05"],
+  ["0x041e54cffbab943fdc54880df2d51ad3", "0x047f540302050db8121e1051053e2401a445fe636cd95139e15d4a5bdec8b718"],
+  ["0x06", "0x06"],
+  [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]
+]
+deck_size = 3
 card = [
   "0x041e54cffbab943fdc54880df2d51ad3",
   "0x047f540302050db8121e1051053e2401a445fe636cd95139e15d4a5bdec8b718"
@@ -8,11 +15,8 @@ decrypt_components = [
   1, 1, 1, 1, 1, 1, 1, 1
 ]
 num_decrypt_components = 2
+
+expected_messages = [42, 43, 44, 0, 0, 0, 0, 0, 0, 0]
 num_expected_messages = 3
-expected_messages = [
-  42, # msg
-  43,
-  44,
-  0, 0, 0, 0, 0, 0, 0
-]
+
 nullifier_secret = 123456789
