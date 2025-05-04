@@ -3,10 +3,10 @@
 # -----------------------------
 
 # List of all crate names (edit if you add more)
-CRATES = decrypt_one_layer shuffle4 shuffle5 shuffle6 shuffle7 shuffle8 shuffle9 shuffle10 verify_card_message
+CRATES = decrypt_one_layer gen_elgamal_key_pair shuffle4 shuffle5 shuffle6 shuffle7 shuffle8 shuffle9 shuffle10 verify_card_message
 
 .PHONY: all clean format fmt test tree \
-        all-% clean-% compile-% execute-% prove-% write_vk-% verify-% test-%
+        all_% clean_% compile_% execute_% prove_% write_vk_% verify_% test_%
 
 # -----------------------------
 # High-level commands
@@ -41,34 +41,34 @@ tree:
 # Usage: make all-shuffle5, make prove-shuffle6, etc.
 # -----------------------------
 
-all-%:
-	$(MAKE) compile-$*
-	$(MAKE) execute-$*
-	$(MAKE) prove-$*
-	$(MAKE) write_vk-$*
-	$(MAKE) verify-$*
+all_%:
+	$(MAKE) compile_$*
+	$(MAKE) execute_$*
+	$(MAKE) prove_$*
+	$(MAKE) write_vk_$*
+	$(MAKE) verify_$*
 
-compile-%:
+compile_%:
 	nargo compile --package $*
 	mkdir -p ./target/$*
 	mv ./target/$*.json ./target/$*/$*.json
 
-execute-%:
+execute_%:
 	cd crates/$* && nargo compile && nargo execute
 	mv ./target/$*.gz ./target/$*/$*.gz
 	rm -f ./target/$*.json
 
-prove-%:
+prove_%:
 	bb prove -b ./target/$*/$*.json -w ./target/$*/$*.gz -o ./target/$*
 
-write_vk-%:
+write_vk_%:
 	bb write_vk -b ./target/$*/$*.json -o ./target/$*
 
-verify-%:
+verify_%:
 	bb verify -k ./target/$*/vk -p ./target/$*/proof
 
-test-%:
+test_%:
 	nargo test --package $*
 
-clean-%:
+clean_%:
 	rm -rf ./target/$*
