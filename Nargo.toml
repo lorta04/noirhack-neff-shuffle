@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "crates/aggregate_public_keys",
     "crates/decrypt_one_layer",
     "crates/gen_elgamal_key_pair",
     "crates/shared",

@@ -1,0 +1,6 @@
+[package]
+name = "aggregate_public_keys"
+type = "bin"
+
+[dependencies]
+shared = { path = "../shared" }

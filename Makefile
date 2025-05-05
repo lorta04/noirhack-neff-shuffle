@@ -3,7 +3,7 @@
 # -----------------------------
 
 # List of all crate names (edit if you add more)
-CRATES = decrypt_one_layer gen_elgamal_key_pair shuffle4 shuffle5 shuffle6 shuffle7 shuffle8 shuffle9 shuffle10 verify_card_message
+CRATES = aggregate_public_keys decrypt_one_layer gen_elgamal_key_pair shuffle4 shuffle5 shuffle6 shuffle7 shuffle8 shuffle9 shuffle10 verify_card_message
 
 .PHONY: all clean format fmt test tree \
         all_% clean_% compile_% execute_% prove_% write_vk_% verify_% test_%
