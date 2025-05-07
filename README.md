@@ -1,5 +1,15 @@
 # 🧪 noirhack-neff-shuffle
 
+```bash
+ ####### #    #       #     #                                                  
+      #  #   #        #  #  # ###### #####  ###### #    #  ####  #      ###### 
+     #   #  #         #  #  # #      #    # #      #    # #    # #      #      
+    #    ###    ##### #  #  # #####  #    # #####  #    # #    # #      #####  
+   #     #  #         #  #  # #      #####  #      # ## # #    # #      #      
+  #      #   #        #  #  # #      #   #  #      ##  ## #    # #      #      
+ ####### #    #        ## ##  ###### #    # ###### #    #  ####  ###### #      
+```                                                                              
+
 > 🔐 A privacy-preserving, collaborative, verifiable secret shuffle system in Noir — inspired by [Neff (2001)](https://web.cs.ucdavis.edu/~franklin/ecs228/2013/neff_2001.pdf) and [ZK-Werewolf at ETHGlobal Waterloo](https://ethglobal.com/showcase/zk-werewolf-ce61c). Built by a team of programmers (and ChatGPT) who had barely touched Noir or ZK before — fueled by curiosity, ambition, and good old hopes and dreams.
 
 ## 💡 Why This Exists
@@ -18,7 +28,7 @@ Next up: turning this into a full **ZK-Werewolf** game — with private, verifia
 
 ## 🔀 Overview
 
-### 🧙 Shuffling
+### ♠️ Shuffling
 
 In our demo, the game begins with a plaintext deck sent to Player 1.
 
@@ -62,12 +72,12 @@ Imagine playing **Werewolf** — but fully on-chain.
 
 It’s the cryptographic backbone for hiding roles while proving the randomness (and decisions) were real.
 
-> 🔮 In the future, as layer 2s improve and ZK proving becomes more efficient, a fully on-chain ZK-Werewolf — with no backend and good UX — could become reality.  
+> In the future, as layer 2s improve and ZK proving becomes more efficient, a fully on-chain ZK-Werewolf — with no backend and good UX — could become reality.  
 > And this doesn’t stop at Werewolf: other games, especially those involving **randomness and hidden state**, could be **fully implemented in ZK** too.
 
 ## ⚙️ Example Usage
 
-### 🧪 Run all steps for a specific circuit
+### Run all steps for a specific circuit
 
 ```bash
 make all-shuffle4
@@ -81,7 +91,7 @@ This runs:
 - `write_vk`: export the verification key
 - `verify`: verify the proof
 
-### 🧪 Run only specific steps
+### Run only specific steps
 
 ```bash
 make execute-shuffle4   # Just run the circuit
@@ -89,19 +99,19 @@ make prove-shuffle4     # Just generate the proof
 make verify-shuffle4    # Just verify it
 ```
 
-### 🧪 Format all circuits
+### Format all circuits
 
 ```bash
 make format
 ```
 
-### 🧪 Run everything for all circuits
+### Run everything for all circuits
 
 ```bash
 make all
 ```
 
-### 🧪 Run all tests
+### Run all tests
 
 ```bash
 make test
