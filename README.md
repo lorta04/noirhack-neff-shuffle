@@ -1,14 +1,14 @@
 # 🧪 noirhack-neff-shuffle
 
 ```bash
- ####### #    #       #     #                                                  
-      #  #   #        #  #  # ###### #####  ###### #    #  ####  #      ###### 
-     #   #  #         #  #  # #      #    # #      #    # #    # #      #      
-    #    ###    ##### #  #  # #####  #    # #####  #    # #    # #      #####  
-   #     #  #         #  #  # #      #####  #      # ## # #    # #      #      
-  #      #   #        #  #  # #      #   #  #      ##  ## #    # #      #      
- ####### #    #        ## ##  ###### #    # ###### #    #  ####  ###### #      
-```                                                                              
+ ####### #    #       #     #
+      #  #   #        #  #  # ###### #####  ###### #    #  ####  #      ######
+     #   #  #         #  #  # #      #    # #      #    # #    # #      #
+    #    ###    ##### #  #  # #####  #    # #####  #    # #    # #      #####
+   #     #  #         #  #  # #      #####  #      # ## # #    # #      #
+  #      #   #        #  #  # #      #   #  #      ##  ## #    # #      #
+ ####### #    #        ## ##  ###### #    # ###### #    #  ####  ###### #
+```
 
 > 🔐 A privacy-preserving, collaborative, verifiable secret shuffle system in Noir — inspired by [Neff (2001)](https://web.cs.ucdavis.edu/~franklin/ecs228/2013/neff_2001.pdf) and [ZK-Werewolf at ETHGlobal Waterloo](https://ethglobal.com/showcase/zk-werewolf-ce61c). Built by a team of programmers (and ChatGPT) who had barely touched Noir or ZK before — fueled by curiosity, ambition, and good old hopes and dreams.
 
@@ -46,8 +46,6 @@ Once all shuffle layers are applied, players decrypt their card **one layer at a
 - The protocol remains fair and private **as long as at least one player is honest** and keeps their shuffle secret — even if others collude.
 - It can be deployed on-chain, though the UX would be rough due to the number of transactions required.  
   ➤ This could be improved with batching and relayers, but coordination would be complex.
-
----
 
 ### 🧙 Role Actions (Early Prototype)
 
