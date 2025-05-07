@@ -6,12 +6,12 @@ This circuit computes the **aggregate ElGamal public key** from a list of indivi
 
 Given:
 
--   A list of public keys `pks: [Field; 10]`
-    
--   A number `num_pks` specifying how many of the keys are active
-    
+- `pks: [Field; 10]` — A fixed-size array of public keys
+- `num_pks: Field` — The number of keys to include in aggregation (starting from index 0)
 
-The circuit multiplies the first `num_pks` entries in `pks` to compute the aggregate public key:
+The circuit outputs:
+
+-   `agg_pk: Field` — The aggregate public key, calculated as the product of the first `num_pks` entries in `pks`
 
 ```
 agg_pk = pks[0] * pks[1] * ... * pks[num_pks - 1]
@@ -51,7 +51,7 @@ participant S as Server
 
 participant A as All
 
-  
+
 
 P1->>P1: Run gen_elgamal_key_pair
 
@@ -59,7 +59,7 @@ P2->>P2: Run gen_elgamal_key_pair
 
 Pn->>Pn: Run gen_elgamal_key_pair
 
-  
+
 
 P1->>S: Send pk1
 
@@ -67,11 +67,10 @@ P2->>S: Send pk2
 
 Pn->>S: Send pkn
 
-  
+
 
 S->>S: Run aggregate_public_keys
 
 S->>A: Share **agg_pk** for encryption
 
 ```
-
