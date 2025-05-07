@@ -9,8 +9,8 @@ It’s used in collaborative shuffling protocols, where each player hides the or
 Given:
 
 - `g: Field` — Generator of the group
-- `agg_pk: Field` — Aggregate public key shared by all players
-- `deck: [[Field; 2]; 4]` — The current state of the 4-card deck (plaintext or encrypted)
+- `agg_pk: pub Field` — Aggregate public key shared by all players
+- `deck: pub [[Field; 2]; 4]` — The current state of the 4-card deck (plaintext or encrypted)
 - `rand: [Field; 4]` — Per-card randomness used to re-encrypt each card
 - `perm: [[Field; 4]; 4]` — 4×4 permutation matrix indicating how cards are shuffled
 

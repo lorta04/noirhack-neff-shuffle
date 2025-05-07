@@ -7,7 +7,7 @@ This circuit allows a participant to **decrypt one layer** of an ElGamal-encrypt
 Given:
 
 - `g: Field` — Generator of the group
-- `card: [Field; 2]` — An encrypted card (ciphertext pair `[c1, c2]`)
+- `card: pub [Field; 2]` — An encrypted card (ciphertext pair `[c1, c2]`)
 - `sk: Field` — A single participant’s secret key share
 
 The circuit outputs:
