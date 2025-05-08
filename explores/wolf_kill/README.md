@@ -49,4 +49,10 @@ If game design allows or requires, the victim may later submit a **zero-knowledg
 
 ---
 
+#### What does this translate to?
+
+Complete privacy-preserving announcements on a public bulletin board.
+
+---
+
 Same as the [seer peek design](../seer_peek/README.md), this approach to wolf anonymity is **not implemented in the demo due to time constraints**.

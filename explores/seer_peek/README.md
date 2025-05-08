@@ -57,4 +57,10 @@ The author believes this is beyond the scope of the repository. Nevertheless, th
 
 ---
 
+#### What does this translate to?
+
+Complete privacy-preserving commands and replies on a public bulletin board.
+
+---
+
 While not implemented in our demo due to time constraints, we hope this design inspires others to explore and extend it—turning what was once a fantasy into reality.
