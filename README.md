@@ -1,13 +1,12 @@
 # 🧪 noirhack-neff-shuffle
 
 ```bash
- ####### #    #       #     #
-      #  #   #        #  #  # ###### #####  ###### #    #  ####  #      ######
-     #   #  #         #  #  # #      #    # #      #    # #    # #      #
-    #    ###    ##### #  #  # #####  #    # #####  #    # #    # #      #####
-   #     #  #         #  #  # #      #####  #      # ## # #    # #      #
-  #      #   #        #  #  # #      #   #  #      ##  ## #    # #      #
- ####### #    #        ## ##  ###### #    # ###### #    #  ####  ###### #
+ _   _       _        _    _                             _  __ 
+| \ | |     (_)      | |  | |                           | |/ _|
+|  \| | ___  _ _ __  | |  | | ___ _ __ _____      _____ | | |_ 
+| . ` |/ _ \| | '__| | |/\| |/ _ \ '__/ _ \ \ /\ / / _ \| |  _|
+| |\  | (_) | | |    \  /\  /  __/ | |  __/\ V  V / (_) | | |  
+\_| \_/\___/|_|_|     \/  \/ \___|_|  \___| \_/\_/ \___/|_|_|  
 ```
 
 > 🔐 A privacy-preserving, collaborative, verifiable secret shuffle system in Noir — inspired by [Neff (2001)](https://web.cs.ucdavis.edu/~franklin/ecs228/2013/neff_2001.pdf) and [ZK-Werewolf at ETHGlobal Waterloo](https://ethglobal.com/showcase/zk-werewolf-ce61c). Built by a team of programmers (and ChatGPT) who had barely touched Noir or ZK before — fueled by curiosity, ambition, and good old hopes and dreams.
