@@ -87,7 +87,7 @@ To use the provided `Makefile` workflows, you’ll need the following tools inst
 ### Run all steps for a specific circuit
 
 ```bash
-make all-shuffle4
+make all_shuffle4
 ```
 
 This runs:
@@ -101,9 +101,9 @@ This runs:
 ### Run only specific steps
 
 ```bash
-make execute-shuffle4   # Just run the circuit
-make prove-shuffle4     # Just generate the proof
-make verify-shuffle4    # Just verify it
+make execute_shuffle4   # Just run the circuit
+make prove_shuffle4     # Just generate the proof
+make verify_shuffle4    # Just verify it
 ```
 
 ### Format all circuits
