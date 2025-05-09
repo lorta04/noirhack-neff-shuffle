@@ -31,7 +31,7 @@ We also include conceptual designs for [peeking](./explores/seer_peek/README.md)
 
 ### ♠️ Shuffling
 
-In our demo, the game begins with a plaintext deck sent to Player 1.
+The game begins with a plaintext deck sent to Player 1.
 
 Each player, in turn:
 
