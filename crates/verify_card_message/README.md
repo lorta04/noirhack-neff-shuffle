@@ -8,23 +8,23 @@ Given:
 
 - `deck: pub [[Field; 2]; 10]` — The encrypted deck of cards
 - `deck_size: pub Field` — Number of active cards in the deck
-- `card: [Field; 2]` — The encrypted card the prover claims to own
-- `decrypt_components: [Field; 10]` — Partial decryption shares from players
+- `card: [Field; 2]` — The encrypted card the prover owns
+- `decrypt_components: [Field; 10]` — Decrypt components from other players and the prover
 - `num_decrypt_components: Field` — How many decrypt components are provided
-- `expected_messages: pub [Field; 10]` — A list of valid expected messages
-- `num_expected_messages: pub Field` — Number of valid entries in the expected list
+- `expected_messages: pub [Field; 10]` — A list of expected messages
+- `num_expected_messages: pub Field` — Number of entries in the expected list
 - `nullifier_secret: Field` — A private secret used to prevent double usage
 
 The circuit:
 
-1.  Ensures the claimed `card` exists in the `deck`
+1.  Ensures the `card` exists in the public `deck`
 2.  Applies all `decrypt_components` to compute the decrypted message:
 
 ```
 m = card[1] / (decrypt_component₁ × ... × decrypt_componentₙ)
 ```
 
-3.  Ensures the result matches at least one `expected_message`
+3.  Ensures the result matches at least one `expected_message` of the public list
 
 The circuit outputs:
 
@@ -58,6 +58,8 @@ This circuit can prove that a player:
   _→ use expected_messages = [SEER, VILLAGER]_
 - **Is a WOLF**  
   _→ use expected_messages = [WOLF]_
+
+—without revealing the card they actually own.
 
 ### 🏷️ Attached Action Tags
 
