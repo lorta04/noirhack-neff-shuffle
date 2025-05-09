@@ -61,6 +61,8 @@ This circuit can prove that a player:
 
 —without revealing the card they actually own.
 
+> ⚠️ WOLF, SEER, and VILLAGER are Field values that must be freshly randomized for each session to prevent reuse of proofs from prior games.
+
 ### 🏷️ Attached Action Tags
 
 You can extend the `expected_messages` array to include metadata like actions:
