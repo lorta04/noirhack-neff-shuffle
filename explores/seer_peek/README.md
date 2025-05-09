@@ -14,7 +14,7 @@ To learn another player’s role, a seer must directly query the target—since 
 **Solution:**  
 To obfuscate the seer, every player sends a message to a target of their choice via the server. Each message contains:
 
-- a freshly generated public key (used to receive a response), encrypted with the target’s public key so only the target can decrypt it.
+- a freshly generated public key (used to receive a response)
 
 When a player receives messages, they must respond—also via the server—by encrypting their own role as "WOLF" or "NON_WOLF" using each decrypted return key. The return key is included as a public input in the zero-knowledge proof that generates the response. This enables verifiers to confirm that the player used the correct return key and responded to all messages, without learning anything about senders.
 
