@@ -101,9 +101,9 @@ This runs:
 ### Run only specific steps
 
 ```bash
-make execute_shuffle4   # Just run the circuit
-make prove_shuffle4     # Just generate the proof
-make verify_shuffle4    # Just verify it
+make execute_shuffle4   # Run the circuit
+make prove_shuffle4     # Generate the proof
+make verify_shuffle4    # Verify it
 ```
 
 ### Format all circuits
