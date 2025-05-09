@@ -50,7 +50,7 @@ Once all shuffle layers are applied, players decrypt their card **one layer at a
 
 ### 🧙 Role Actions (Early Prototype)
 
-After roles are assigned, players can prove certain actions to a server using ZK:
+After roles are assigned, players can prove certain actions to the server using ZK:
 
 - 🧙‍♂️ **Seer**: Proves they are a Seer, then specifies a target. The server queries the target and responds.
 - 🐺 **Wolf**: Proves they are a Wolf, then submits a target to the server.
