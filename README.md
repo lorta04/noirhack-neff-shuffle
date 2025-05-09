@@ -36,8 +36,8 @@ In our demo, the game begins with a plaintext deck sent to Player 1.
 Each player, in turn:
 
 - Takes the encrypted deck
-- Applies their own rerandomization and permutation
-- Proves in ZK that they performed a valid shuffle
+- Applies their own rerandomization and permutation using **ElGamal encryption**
+- Proves in ZK that they performed a valid shuffle without altering card content
 - Passes the output to the next player
 
 Once all shuffle layers are applied, players decrypt their card **one layer at a time**, requesting partial decryptions from others and applying their own secret at the end — ensuring that **only they** can view the final result.
