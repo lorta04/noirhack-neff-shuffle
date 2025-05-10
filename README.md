@@ -158,18 +158,18 @@ make test
 - 🧍‍♂️ **Uncooperative or Colluding Players**  
   If some players **refuse to cooperate or act maliciously together**, the protocol may be unable to proceed — blocking progress in shuffling or revealing.
 
-## Circuit Sizes
+## Circuit Size & Proof Time
 
-| Circuit               | Size  |
-| --------------------- | ----- |
-| decrypt_one_layer     | 2022  |
-| gen_elgamal_key_pair  | 2099  |
-| aggregate_public_keys | 3547  |
-| verify_card_message   | 4019  |
-| shuffle4              | 9624  |
-| shuffle5              | 11924 |
-| shuffle6              | 14222 |
-| shuffle7              | 16526 |
-| shuffle8              | 18852 |
-| shuffle9              | 21170 |
-| shuffle10             | 23494 |
+| Circuit               | Size  | Proof Time |
+| --------------------- | ----- | ---------- |
+| decrypt_one_layer     | 2022  | 375ms      |
+| gen_elgamal_key_pair  | 2099  | 450ms      |
+| aggregate_public_keys | 3547  | 450ms      |
+| verify_card_message   | 4019  | 530ms      |
+| shuffle4              | 9624  | 1500ms     |
+| shuffle5              | 11924 |            |
+| shuffle6              | 14222 |            |
+| shuffle7              | 16526 |            |
+| shuffle8              | 18852 |            |
+| shuffle9              | 21170 |            |
+| shuffle10             | 23494 |            |
